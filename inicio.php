@@ -1,18 +1,25 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
-    <body>
-        <?php
-          include "navbar.php";
-        ?>
-        <center><h1>Cadastro de Academias e seus Usuarios</h1></center>
-        <center><h1>Autores: Ana Carla e Enrico 1711</h1></center>
+<?php
+    require_once "autoload.php";
         
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
-</html>
+    define("APP", "http://localhost/web3/mvc/");
+    if (isset($_GET['url'])) {
+        $url = $_GET['url'];
+    } else {
+        $url = "index/index";
+    }
+    // noticia/listar
+    // noticia/novo
+    // noticia/salvar
+    // noticia/editar/10
+    // noticia/excluir/15
+    $itens_url = explode('/', $url);
+    $nomeControlador = ucfirst($itens_url[0])."Controller";
+    $controlador = new $nomeControlador();
+    $acao = $itens_url[1];
+    if (count($itens_url)==2) {
+        $controlador->$acao();
+    } else {
+        $id = $itens_url[2];
+        $controlador->$acao($id);
+    }
+?>
